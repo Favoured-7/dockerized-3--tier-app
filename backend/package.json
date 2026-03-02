@@ -1,7 +1,7 @@
 {
-    "name": "backend"
-    "version": "1.0.0"
-    "descripton": "Backend API for 3-tier app"
+    "name": "backend",
+    "version": "1.0.0",
+    "descripton": "Backend API for 3-tier app",
     "main": "app.js",
     "scripts": {
         "start": "node app.js"

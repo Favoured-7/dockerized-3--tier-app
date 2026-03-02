@@ -1,45 +1,45 @@
 version: '3.8'
 
 services:
-database:
-image: postgres:15-alpine
-environment:
-POSTGRES_USER: postgres
-POSTGRES_PASSWORD: password
-POSTGRES_DB: mydb
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    image: favoured7/backend:latest
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: mydb
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    image: favoured7/frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
 volumes:
-- db_data:/var/lib/postgresql/data
-networks:
-- app-network
-
-backend:
-build: ./backend
-image: favoured7/backend:latest
-environment:
-DB_HOST: db
-DB_USER: postgres
-DB_PASSWORD: password
-DB_NAME: mydb
-depends_on:
-- db
-ports:
-- "5000:5000"
-networks:
-- app-network
-
-frontend:
-build: ,/frontend
-image: favoured7/frontend:latest
-ports:
-- "80:80"
-depends_on:
-- backend
-networks:
-- app-network
-
-volumes:
-db_data:
+  db_data:
 
 networks:
-app-network:
-driver: bridge
+  app-network:
+    driver: bridge

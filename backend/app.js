@@ -1,8 +1,9 @@
-const express = required('express');
-const { pool } = require('pg');
+const express = require('express');
+const { Pool } = require('pg');
+
 const app = express();
 
-const pool = new pool({
+const pool = new Pool({
     host: process.env.DB_HOST || 'db',
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD || 'password',
