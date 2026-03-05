@@ -13,7 +13,6 @@ services:
       - app-network
 
   backend:
-    build: ./backend
     image: favoured7/backend:latest
     environment:
       DB_HOST: db
@@ -28,7 +27,6 @@ services:
       - app-network
 
   frontend:
-    build: ./frontend
     image: favoured7/frontend:latest
     ports:
       - "80:80"
